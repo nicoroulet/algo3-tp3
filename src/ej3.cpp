@@ -10,14 +10,14 @@ void grafo::CIDMgoloso(){
 		marcar = nodoMayorGrado();
 		marcarCIDM(marcar);
 	}
-	print_result();
+	print_res();
 }
 
 
 int grafo::nodoMayorGrado(){
 	int nodoMax = -1;
 	for ( auto it = ady.begin(); it != ady.end(); ++it) {
-		if (it.size() > ady[nodoMax].size()){
+		if (it->size() > ady[nodoMax].size()){
 			nodoMax = it-ady.begin();
 		}
 	}
