@@ -6,17 +6,17 @@ using namespace std;
 grafo::grafo() {
 	cin >> n >> m;
 	vector< list<int> > ady(n,list<int>());
+	int a, b;
 	for (int i = 0; i < m; ++i)
-	{
-		int a, b;
-		cin >> a >> b;
+	{	cin >> a >> b;
+		a--, b--;
 		ady[a].push_back(b);
 		ady[b].push_back(a);
 	}
-	for (auto i = ady.begin(); i != ady.end(); ++i)
+	for (auto it = ady.begin(); it != ady.end(); ++it)
 	{
-		if (i->empty()) {
-			res.push_back(i - ady.begin());
+		if (it->empty()) {
+			res.push_back(it - ady.begin());
 			n--;
 		}
 	}
@@ -28,4 +28,15 @@ void grafo::print_res() {
 		cout << " " << *it;
 	}
 	cout << endl;
+}
+
+void grafo::printGrafo(){
+	cout << n << " " << m << endl;
+	for (int i = 0; i < n; ++i) {
+		cout << i + 1 << "->";
+		for (auto it = ady[i].begin(); it != ady[i].end(); ++it) {
+			cout << *it + 1 << " "; 			
+		}
+		cout << endl;
+	}
 }

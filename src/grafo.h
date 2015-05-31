@@ -8,8 +8,8 @@ class grafo {
 	
 	private:
 		int n, m;
-		vector< list<unsigned int> > ady;
-		list<unsigned int> res;
+		vector< list<int> > ady;
+		list<int> res;
 		
 		
 		int nodoMayorGrado();
@@ -19,6 +19,7 @@ class grafo {
 		
 	public:
 		grafo();
+		void printGrafo();
 		
 		// void CIDMexacto();
 		void CIDMgoloso();
