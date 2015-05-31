@@ -5,7 +5,7 @@ using namespace std;
 
 grafo::grafo() {
 	cin >> n >> m;
-	ady=vector(n,list<int>());
+	vector< list<int> > ady(n,list<int>());
 	for (int i = 0; i < m; ++i)
 	{
 		int a, b;
@@ -23,7 +23,7 @@ grafo::grafo() {
 }
 void grafo::print_res() {
 	cout << res.size();
-	for (list<int>::iterator it = res.begin(); it != res.end(); ++it)
+	for (auto it = res.begin(); it != res.end(); ++it)
 	{
 		cout << " " << *it;
 	}

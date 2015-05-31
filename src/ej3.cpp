@@ -26,19 +26,16 @@ int grafo::nodoMayorGrado(){
 
 
 void grafo::borrarNodo(int borrame) {
-	int cantVecinos = ady[borrame].size();
-	int j;
-	for (int i = 0; i < cantVecinos; ++i) {
-		j = ady[borrame][i];
-		ady[j].remove(borrame);
+	for (auto it = ady[borrame].begin(); it != ady[borrame].end(); ++it) {
+		ady[*it].remove(borrame);
 	}
 	ady[borrame].clear();
 	n--;
 }
 
 void grafo::marcarCIDM(int marcame){
-	list l = ady[marcame]; 
-	for (std::list::iterator it = l.begin(); it != l.end(); ++it) {
+	list<unsigned int> l = ady[marcame]; 
+	for (auto it = l.begin(); it != l.end(); ++it) {
 		borrarNodo(*it);
 	}
 	l.clear();

@@ -1,11 +1,15 @@
-#pragma once
+#include <vector>
+#include <list>
+
+
+using namespace std;
 
 class grafo {
 	
 	private:
 		int n, m;
-		std::vector<std::list<unsigned int> > ady;
-		std::list<unsigned int> res;
+		vector< list<unsigned int> > ady;
+		list<unsigned int> res;
 		
 		
 		int nodoMayorGrado();
