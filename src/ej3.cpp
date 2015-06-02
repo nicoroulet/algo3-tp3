@@ -6,7 +6,9 @@
 
 using namespace std;
 
-void grafo::CIDMgoloso(){
+grafoGoloso::grafoGoloso(): grafo(), esta(n, false) {}
+
+void grafoGoloso::CIDMgoloso(){
 	while(n>0) {
 		marcarCIDM(nodoMayorGrado());
 	}
@@ -14,7 +16,7 @@ void grafo::CIDMgoloso(){
 }
 
 
-int grafo::nodoMayorGrado(){
+int grafoGoloso::nodoMayorGrado(){
 	int nodoMax = 0;
 	for (auto it = ady.begin(); it != ady.end(); ++it)
 	{
@@ -26,7 +28,7 @@ int grafo::nodoMayorGrado(){
 }
 
 
-void grafo::borrarNodo(int borrame) {
+void grafoGoloso::borrarNodo(int borrame) {
 	for (auto it = ady[borrame].begin(); it != ady[borrame].end(); ++it) {
 		ady[*it].remove(borrame);
 	}
@@ -34,7 +36,7 @@ void grafo::borrarNodo(int borrame) {
 	n--;
 }
 
-void grafo::marcarCIDM(int marcame){
+void grafoGoloso::marcarCIDM(int marcame){
 	esta[marcame] = true;
 	while(!ady[marcame].empty()) { //for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
 		esta[*ady[marcame].begin()] = true;
@@ -47,7 +49,7 @@ void grafo::marcarCIDM(int marcame){
 
 
 int main() {
-	grafo g;
+	grafoGoloso g;
 	g.printGrafo();
 	g.CIDMgoloso();
 	return 0;

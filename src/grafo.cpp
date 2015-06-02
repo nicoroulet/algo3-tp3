@@ -7,7 +7,7 @@ grafo::grafo() {
 	cin >> n >> m;
 	int a, b;
 	ady.resize(n);
-	esta.assign(n,false);
+	// esta.assign(n,false);
 	for (int i = 0; i < m; ++i) {
 		cin >> a >> b;
 		a--, b--;
