@@ -1,18 +1,17 @@
+#pragma once
+
 #include <vector>
 #include <list>
-
-
-using namespace std;
 
 class grafo {
 	protected:
 		int n, m;
-		vector< list<int> > ady;
-		list<int> res;
-		void print_res();
+		std::vector< std::list<int> > ady;
+		std::list<int> res;
 		
 	public:
 		grafo();
+		void print_res();
 		void printGrafo();
 };
 
@@ -20,23 +19,28 @@ class grafoExacto : public grafo {
 	protected:
 		int n_provisorio;
 		int n_final;
+		int k;
+		int no_visitados;
 		
-		vector<int> marcas;
+		std::list<int> res_parcial;
+		std::vector<int> marcas;
+		
+		void marcarNodo(int k);
+		void desmarcarNodo(int k);
 		
 	public:
+		grafoExacto();
 		void CIDMexacto();
-		
 };
 
 class grafoGoloso : public grafo {
 	protected:
-		vector<bool> esta;
+		std::vector<bool> esta;
 		int nodoMayorGrado();
 		void borrarNodo(int borrame);
 		void marcarCIDM(int marcame);
 		
 	public:
 		grafoGoloso();
-		
 		void CIDMgoloso();
 };

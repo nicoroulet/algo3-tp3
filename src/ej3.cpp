@@ -12,7 +12,6 @@ void grafoGoloso::CIDMgoloso(){
 	while(n>0) {
 		marcarCIDM(nodoMayorGrado());
 	}
-	print_res();
 }
 
 
@@ -52,6 +51,7 @@ int main() {
 	grafoGoloso g;
 	g.printGrafo();
 	g.CIDMgoloso();
+	g.print_res();
 	return 0;
 }
 
