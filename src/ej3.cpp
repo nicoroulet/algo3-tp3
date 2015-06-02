@@ -35,10 +35,11 @@ void grafo::borrarNodo(int borrame) {
 }
 
 void grafo::marcarCIDM(int marcame){
-	cout << "nodo a marcar es " << marcame<< endl;
-	for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
-		cout << "nodo borrarNodo es " << *it << endl;
-		borrarNodo(*it);
+	cout << "nodo a marcar es " << marcame+1<< endl;
+	while(!ady[marcame].empty()) { //for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
+		cout << "nodo borrarNodo es " << *ady[marcame].begin()+1 << endl;
+		borrarNodo(*ady[marcame].begin());
+		printGrafo();	
 	}
 	cout << "sali" << endl;
 	ady[marcame].clear();

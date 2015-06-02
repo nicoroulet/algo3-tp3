@@ -24,7 +24,7 @@ void grafo::print_res() {
 	cout << res.size();
 	for (auto it = res.begin(); it != res.end(); ++it)
 	{
-		cout << " " << *it;
+		cout << " " << *it + 1;
 	}
 	cout << endl;
 }
