@@ -7,12 +7,14 @@ grafo::grafo() {
 	cin >> n >> m;
 	int a, b;
 	ady.resize(n);
+	esta.assign(n,false);
 	for (int i = 0; i < m; ++i) {
 		cin >> a >> b;
 		a--, b--;
 		ady[a].push_back(b);
 		ady[b].push_back(a);
 	}
+
 	for (int i = 0; i < n; ++i) {
 		if (ady[i].empty()) {
 			res.push_back(i);
