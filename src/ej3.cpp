@@ -22,7 +22,6 @@ int grafo::nodoMayorGrado(){
 			nodoMax = it-ady.begin();
 		}
 	}
-	cout << "anduvo nodo mayor grado: " << nodoMax << endl;
 	return nodoMax;
 }
 
@@ -33,17 +32,15 @@ void grafo::borrarNodo(int borrame) {
 	}
 	ady[borrame].clear();
 	n--;
-	cout << "anduvo borrarNodo" << endl;
 }
 
 void grafo::marcarCIDM(int marcame){
-	cout << "entre funcion" << endl;
-	//list<int> l = ; 
-	cout << "entre funcion" << endl;
+	cout << "nodo a marcar es " << marcame<< endl;
 	for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
-		cout << "me parece que no borra nodo" << endl;
+		cout << "nodo borrarNodo es " << *it << endl;
 		borrarNodo(*it);
 	}
+	cout << "sali" << endl;
 	ady[marcame].clear();
 	n--;
 	res.push_back(marcame);	
