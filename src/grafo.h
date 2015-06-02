@@ -10,6 +10,7 @@ class grafo {
 		int n, m;
 		vector< list<int> > ady;
 		list<int> res;
+		vector<bool> esta;
 		
 		
 		int nodoMayorGrado();
