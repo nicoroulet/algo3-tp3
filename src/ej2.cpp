@@ -7,7 +7,16 @@ using namespace std;
 
 
 grafoExacto::grafoExacto(): grafo(), n_provisorio(0), n_final(n), res_parcial(), marcas(n, 0),
-                            k(-1), no_visitados(n) {}
+                            k(-1), no_visitados(n) 
+{
+	//poda: hardcodear nodos aislados
+	for (int i = 0; i < ady.size(); ++i)
+	{
+		if (ady[i].empty()) {
+			marcarNodo(i);
+		}
+	}
+}
 
 void grafoExacto::CIDMexacto() {
 	k++;
@@ -26,8 +35,12 @@ void grafoExacto::CIDMexacto() {
 		return;
 	}
 	
-	// podas
-	
+	// poda: soluciones inutiles
+	if (n_provisorio >= n_final-1) {
+		k--;
+		return;
+	}
+
 	CIDMexacto();
 	if (marcas[k] == 0) {
 		marcarNodo(k);
