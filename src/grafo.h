@@ -46,3 +46,15 @@ class grafoGoloso : public grafo {
 		grafoGoloso(grafo &g);
 		int CIDMgoloso();
 };
+
+class grafoLocalS : public grafo {
+	protected:
+		int knActual;
+		int knPosible;
+		std::list<int> res_parcial;
+		void encontrarSolucionLocal();
+
+	public:
+		grafoLocalS();
+		void CIDMlocalS();
+}
