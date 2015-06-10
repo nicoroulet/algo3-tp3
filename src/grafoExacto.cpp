@@ -20,8 +20,6 @@ grafoExacto::grafoExacto(): grafo(), n_provisorio(0), n_final(n), res_parcial(),
 
 void grafoExacto::CIDMexacto() {
 	k++;
-	print_res();
-	cout << n_provisorio << ": ";
 	// si es solucion
 	if (no_visitados == 0) {
 		if (n_provisorio < n_final) {
