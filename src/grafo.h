@@ -11,6 +11,7 @@ class grafo {
 		
 	public:
 		grafo();
+		grafo(grafo &g);
 		void print_res();
 		void printGrafo();
 };
@@ -42,5 +43,6 @@ class grafoGoloso : public grafo {
 		
 	public:
 		grafoGoloso();
-		void CIDMgoloso();
+		grafoGoloso(grafo &g);
+		int CIDMgoloso();
 };

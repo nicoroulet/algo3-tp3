@@ -22,6 +22,9 @@ grafo::grafo() {
 		}
 	}
 }
+
+grafo::grafo(grafo &g) : ady(g.ady), n(g.n), m(g.m) {}
+
 void grafo::print_res() {
 	cout << res.size();
 	for (auto it = res.begin(); it != res.end(); ++it)
