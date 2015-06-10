@@ -1,5 +1,5 @@
 #include "grafo.h"
-
+#include <iostream>
 using namespace std;
 
 
@@ -20,11 +20,14 @@ grafoExacto::grafoExacto(): grafo(), n_provisorio(0), n_final(n), res_parcial(),
 
 void grafoExacto::CIDMexacto() {
 	k++;
+	print_res();
+	cout << n_provisorio << ": ";
 	// si es solucion
 	if (no_visitados == 0) {
 		if (n_provisorio < n_final) {
 			res.clear();
 			res = list<int>(res_parcial);
+			n_final=n_provisorio;
 		}
 		k--;
 		return;
@@ -53,6 +56,7 @@ void grafoExacto::CIDMexacto() {
 
 void grafoExacto::marcarNodo(int k) {
 	marcas[k]++;
+	n_provisorio++;
 	no_visitados--;
 	for (auto it = ady[k].begin(); it != ady[k].end(); ++it) {
 		if (marcas[*it]++ == 0) no_visitados--;
@@ -62,6 +66,7 @@ void grafoExacto::marcarNodo(int k) {
 
 void grafoExacto::desmarcarNodo(int k) {
 	marcas[k]--;
+	n_provisorio--;
 	no_visitados++;
 	for (auto it = ady[k].begin(); it != ady[k].end(); ++it) {
 		if (--marcas[*it] == 0) no_visitados++;
