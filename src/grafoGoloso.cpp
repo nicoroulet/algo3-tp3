@@ -7,11 +7,10 @@ grafoGoloso::grafoGoloso(): grafo(), esta(n, false) {}
 
 grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
 
-int grafoGoloso::CIDMgoloso(){
+void grafoGoloso::CIDMgoloso(){
 	while(n>0) {
 		marcarCIDM(nodoMayorGrado());
 	}
-	return res.size();
 }
 
 

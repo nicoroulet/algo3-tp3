@@ -7,6 +7,7 @@ class grafo {
 	protected:
 		int n, m;
 		std::vector< std::list<int> > ady;
+		std::vector< std::vector<int> > componentes;
 		std::list<int> res;
 		
 	public:
@@ -18,16 +19,20 @@ class grafo {
 
 class grafoExacto : public grafo {
 	protected:
-		int n_provisorio;
-		int n_final;
+		std::vector<int> n_provisorio;
+		std::vector<int> n_final;
+		std::vector<int> no_visitados;
 		int k;
-		int no_visitados;
+		int act; // numero de componente siendo resuelta
+		
 		
 		std::list<int> res_parcial;
 		std::vector<int> marcas;
 		
+		
 		void marcarNodo(int k);
 		void desmarcarNodo(int k);
+		void subCIDMexacto();
 		
 	public:
 		grafoExacto();
@@ -44,7 +49,7 @@ class grafoGoloso : public grafo {
 	public:
 		grafoGoloso();
 		grafoGoloso(grafo &g);
-		int CIDMgoloso();
+		void CIDMgoloso();
 };
 
 class grafoLocalS : public grafo {
@@ -57,4 +62,4 @@ class grafoLocalS : public grafo {
 	public:
 		grafoLocalS();
 		void CIDMlocalS();
-}
+};
