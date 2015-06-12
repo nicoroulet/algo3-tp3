@@ -30,8 +30,8 @@ class grafoExacto : public grafo {
 		std::vector<int> marcas;
 		
 		
-		void marcarNodo(int k);
-		void desmarcarNodo(int k);
+		void marcarNodo(int marcame);
+		void desmarcarNodo(int desmarcame);
 		void subCIDMexacto();
 		
 	public:
@@ -52,14 +52,18 @@ class grafoGoloso : public grafo {
 		void CIDMgoloso();
 };
 
-class grafoLocalS : public grafo {
+class grafoLocalS : public grafoGoloso {
 	protected:
-		int knActual;
-		int knPosible;
-		std::list<int> res_parcial;
 		void encontrarSolucionLocal();
-
+		std::vector< std::list<int> > sorted_ady;
+		
+		int no_visitados;
+		std::vector<int> marcas;
+		
+		void marcarNodo(int marcame);
+		void desmarcarNodo(int desmarcame);
+		
 	public:
 		grafoLocalS();
-		void CIDMlocalS();
+		void CIDMLocalS();
 };

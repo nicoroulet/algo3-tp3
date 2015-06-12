@@ -38,8 +38,8 @@ grafo::grafo() {
 		componente_actual++;
 		while (num_componente[i] != -1 && i<n) ++i;
 	}
-	cout << "componentes:" << componente_actual << endl;
-	cout << "ejes:" << m << endl;
+	// cout << "componentes:" << componente_actual << endl;
+	// cout << "ejes:" << m << endl;
 	// al terminar, compontente_actual vale la cantidad total de componentes conexas
 	componentes = vector< vector<int> >(componente_actual);
 	for(int i = 0; i < n; ++i) {
@@ -51,7 +51,8 @@ grafo::grafo() {
 grafo::grafo(grafo &g) : ady(g.ady), n(g.n), m(g.m) {}
 
 void grafo::print_res() {
-	cout << res.size();
+	res.sort();
+	cout << res.size() << " ";
 	for (auto it = res.begin(); it != res.end(); ++it)
 	{
 		cout << " " << *it + 1;

@@ -88,21 +88,21 @@ void grafoExacto::subCIDMexacto() {
 	return;
 }
 
-void grafoExacto::marcarNodo(int k) {
-	marcas[k]++;
+void grafoExacto::marcarNodo(int marcame) {
+	marcas[marcame]++;
 	n_provisorio[act]++;
 	no_visitados[act]--;
-	for (auto it = ady[k].begin(); it != ady[k].end(); ++it) {
+	for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
 		if (marcas[*it]++ == 0) no_visitados[act]--;
 	}
-	res_parcial.push_back(k);
+	res_parcial.push_back(marcame);
 }
 
-void grafoExacto::desmarcarNodo(int k) {
-	marcas[k]--;
+void grafoExacto::desmarcarNodo(int desmarcame) {
+	marcas[desmarcame]--;
 	n_provisorio[act]--;
 	no_visitados[act]++;
-	for (auto it = ady[k].begin(); it != ady[k].end(); ++it) {
+	for (auto it = ady[desmarcame].begin(); it != ady[desmarcame].end(); ++it) {
 		if (--marcas[*it] == 0) no_visitados[act]++;
 	}
 	res_parcial.pop_back();
