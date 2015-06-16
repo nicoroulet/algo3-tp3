@@ -8,18 +8,20 @@ grafoGoloso::grafoGoloso(): grafo(), esta(n, false) {}
 grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
 
 void grafoGoloso::CIDMgoloso(){
+	aux_ady = vector< list<int> >(ady);
 	while(n>0) {
 		marcarCIDM(nodoMayorGrado());
 	}
+	n = ady.size();
 }
 
 
 int grafoGoloso::nodoMayorGrado(){
 	int nodoMax = 0;
-	for (auto it = ady.begin(); it != ady.end(); ++it)
+	for (auto it = aux_ady.begin(); it != aux_ady.end(); ++it)
 	{
-		if (it->size() >= ady[nodoMax].size() && !esta[it-ady.begin()]){
-			nodoMax = it-ady.begin();
+		if (it->size() >= aux_ady[nodoMax].size() && !esta[it-aux_ady.begin()]){
+			nodoMax = it-aux_ady.begin();
 		}
 	}
 	return nodoMax;
@@ -27,20 +29,20 @@ int grafoGoloso::nodoMayorGrado(){
 
 
 void grafoGoloso::borrarNodo(int borrame) {
-	for (auto it = ady[borrame].begin(); it != ady[borrame].end(); ++it) {
-		ady[*it].remove(borrame);
+	for (auto it = aux_ady[borrame].begin(); it != aux_ady[borrame].end(); ++it) {
+		aux_ady[*it].remove(borrame);
 	}
-	ady[borrame].clear();
+	aux_ady[borrame].clear();
 	n--;
 }
 
 void grafoGoloso::marcarCIDM(int marcame){
 	esta[marcame] = true;
-	while(!ady[marcame].empty()) { //for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
-		esta[*ady[marcame].begin()] = true;
-		borrarNodo(*ady[marcame].begin());
+	while(!aux_ady[marcame].empty()) { //for (auto it = aux_ady[marcame].begin(); it != aux_ady[marcame].end(); ++it) {
+		esta[*aux_ady[marcame].begin()] = true;
+		borrarNodo(*aux_ady[marcame].begin());
 	}
-	ady[marcame].clear();
+	aux_ady[marcame].clear();
 	n--;
 	res.push_back(marcame);	
 }

@@ -46,10 +46,12 @@ class grafoExacto : public grafo {
 
 class grafoGoloso : public grafo {
 	protected:
+		std::vector< std::list<int> > aux_ady;
 		std::vector<bool> esta;
 		int nodoMayorGrado();
 		void borrarNodo(int borrame);
 		void marcarCIDM(int marcame);
+		
 		
 	public:
 		grafoGoloso();
@@ -66,7 +68,6 @@ class grafoLocalS : public grafoGoloso {
 		
 		int no_visitados;
 		std::vector<int> marcas;
-		
 		void marcarNodo(int marcame);
 		void desmarcarNodo(int desmarcame);
 		
@@ -75,14 +76,9 @@ class grafoLocalS : public grafoGoloso {
 		void CIDMLocalS();
 };
 
-class grafoGRASP : public grafo {
+class grafoGRASP : public grafoLocalS {
 	protected:
-		std::vector<bool> esta;
-		int nodosMayorGrado(int cant);
-		
-		void borrarNodo(int borrame);
-		void marcarCIDM(int marcame);
-		
+		std::vector<int> nodosMayorGrado(int cantCandidatos);
 	public:
 		grafoGRASP();
 		grafoGRASP(grafo &g);

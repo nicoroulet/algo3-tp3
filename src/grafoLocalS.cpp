@@ -51,7 +51,7 @@ void grafoLocalS::CIDMLocalS() {
 	int gusGil;
 	do {
 		gusGil = res.size();
-		// sacar2poner1();
+		sacar2poner1();
 		sacar3poner2();
 	} while(res.size() < gusGil);
 }
