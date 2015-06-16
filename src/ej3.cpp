@@ -1,5 +1,5 @@
 #include "grafo.h"
-
+// #include "Tiempo.h"
 int main() {
 	grafoGoloso g;
 	// g.printGrafo();

@@ -1,12 +1,12 @@
 #include "grafo.h"
 #include <iostream>
 #include <vector>
-
+#include <algorithm>
 
 using namespace std;
 
 
-grafoExacto::grafoExacto(): grafo(), res_parcial(), marcas(n, 0)
+grafoExacto::grafoExacto(): grafo(), res_parcial(), marcas(n, 0), grados_max(n)
 {
 	// marco nodos aislados
 	//poda: hardcodear casos chicos
@@ -37,7 +37,17 @@ grafoExacto::grafoExacto(): grafo(), res_parcial(), marcas(n, 0)
 	// 		n--;
 	// 	}
 	// }
-		
+	
+	// calculo los grados 
+	for(int i = 0; i < n; ++i) {
+		grados_max[i] = ady[i].size()+1;
+	}
+	sort(grados_max.begin(), grados_max.end(), greater<int>()); // ordeno de mayor a menor
+	for(int i = 1; i < n; ++i) {
+		grados_max[i] += grados_max[i-1];
+	}
+	
+	
 	// cota inicial
 	// grafoGoloso aux(*this);
 	// n_final = aux.CIDMgoloso()+1;
@@ -47,10 +57,13 @@ void grafoExacto::CIDMexacto() {
 	for (act = 0; act < componentes.size(); act++)
 	{
 		k = -1;
-		cout << "resolviendo componente " << act << " de tamanio " << componentes[act].size() << endl;
-		res_parcial.swap(res);
+		// cout << "resolviendo componente " << act << " de tamanio " << componentes[act].size() << endl;
+		res_parcial.swap(res); //empiezo desde donde dejo la componente conexa anterior
 		subCIDMexacto();
 	}
+	
+	// tiempo.end();
+	// ofstream f("../tests/stats/tmp_stats.dat", ofstream::app); f << n << " " << m << " " << tiempo.time() << endl;
 }
 
 void grafoExacto::subCIDMexacto() {
@@ -77,6 +90,12 @@ void grafoExacto::subCIDMexacto() {
 		k--;
 		return;
 	}
+	
+	// poda grados_max: si no hay chances de llegar 
+	if (no_visitados[act] > grados_max[n_final[act]-n_provisorio[act]-1]) {
+		k--; return;
+	}
+	
 
 	subCIDMexacto();
 	if (marcas[nodo] == 0) {

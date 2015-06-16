@@ -17,6 +17,7 @@ grafo::grafo() {
 		ady[b].push_back(a);
 	}
 	
+	// tiempo.begin();
 	
 	// separamos las componentes
 	// BFS, numero las componentes conexas

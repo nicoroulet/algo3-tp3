@@ -1,6 +1,6 @@
 
 #include "grafo.h"
-
+// #include "Tiempo.h"
 int main()
 {
 	grafoExacto g;

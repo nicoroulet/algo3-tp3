@@ -1,10 +1,83 @@
+#include "grafo.h"
 #include <vector>
+#include <algorithms>
+#include <stdlib.h>
 #include <list>
 #include <iostream>
 #include "grafo.h"
 
-
 using namespace std;
+
+// ------------------------------------- Greedy randomize:
+
+grafoGRASP::grafoGRASP(): grafo(), esta(n, false), marcas(n,0), no_visitados(n) {}
+
+grafoGRASP::grafoGRASP(grafoGRASP &g): grafo(g), esta(g.esta), marcas(n,0), no_visitados(n) {}
+
+void grafoGRASP::CIDMGRASP(int cantCandidatos){
+	srand(time(NULL));
+	while(/*criterio*/){
+		// Dios nos perdone y nos guarde en su gloria
+		int backupN = n;
+		int 
+				
+		// ---- Goloso randomizado:
+		while(n>0){
+			cantCandidatos = max(cantCandidatos, n);
+			marcarCIDM(nodosMayorGrado(cantCandidatos)[rand() % (cantCandidatos-1)]);
+		}
+		
+		// ---- Busquedas locales:
+		
+		
+		
+	}
+}
+
+vector<int> grafoGRASP::nodosMayorGrado(int cantCandidatos){
+	vector<int> cantVecinitosPorNodito(cantCandidatos);
+	
+	struct nodito{
+		int numerito;
+		int cantVecinitos;
+		bool operator<(nodito otro){
+			return (cantVecinitos < otro.cantVecinitos);
+		}
+	};
+	
+	for (int i = 0; i < n; ++i){
+		cantVecinitosPorNodito[i] = ady[i].size();
+	}
+	cantVecinitosPorNodito[i].sort(); // nlogn
+	cantVecinitosPorNodito.resize(cantCandidatos); // rebano
+	
+	return cantVecinitosPorNodito;
+}
+
+
+void grafoGRASP::borrarNodo(int borrame) {
+	for (auto it = ady[borrame].begin(); it != ady[borrame].end(); ++it) {
+		ady[*it].remove(borrame);
+	}
+	ady[borrame].clear();
+	n--;
+}
+
+void grafoGRASP::marcarCIDM(int marcame){
+	esta[marcame] = true;
+	while(!ady[marcame].empty()) { //for (auto it = ady[marcame].begin(); it != ady[marcame].end(); ++it) {
+		esta[*ady[marcame].begin()] = true;
+		borrarNodo(*ady[marcame].begin());
+	}
+	ady[marcame].clear();
+	n--;
+	res.push_back(marcame);	
+}
+
+
+
+// ------------------------------------- Busqueda local:
+
 void print(list<int> &l) {
 	
 	for (auto it = l.begin(); it != l.end(); ++it) {
@@ -33,16 +106,14 @@ list<int> interseccion(list<int> &a, list<int> &b) {
 	return intersection;
 }
 
-grafoLocalS::grafoLocalS(): grafoGoloso(), marcas(n,0), no_visitados(n)  {}
-
-void grafoLocalS::CIDMLocalS() {
+void grafoGRASP::CIDMLocalS(int cantCandidatos) {
 	
 	sorted_ady = vector<list<int> >(ady);
 	for (int i = 0; i < n; ++i){
 		sorted_ady[i].sort(); // nlogn
 	}
 	
-	CIDMgoloso();
+	CIDMGRASP(cantCandidatos);
 	
 	for (auto i = res.begin(); i != res.end(); ++i) {
 		marcarNodo(*i);
@@ -56,7 +127,7 @@ void grafoLocalS::CIDMLocalS() {
 	} while(res.size() < gusGil);
 }
 
-void grafoLocalS::sacar2poner1() {
+void grafoGRASP::sacar2poner1() {
 	for (auto i = res.begin(); i != res.end(); ++i) {
 		for (auto j = next(i); j != res.end(); ++j) {
 			list<int> candidatos = interseccion(sorted_ady[*i], sorted_ady[*j]);
@@ -88,7 +159,7 @@ void grafoLocalS::sacar2poner1() {
 
 
 
-void grafoLocalS::sacar3poner2() {
+void grafoGRASP::sacar3poner2() {
 	for (auto i = res.begin(); i != res.end(); ++i) {
 		for (auto j = next(i); j != res.end(); ++j) {
 			list<int> candidatos = interseccion(sorted_ady[*i], sorted_ady[*j]);
@@ -147,7 +218,7 @@ void grafoLocalS::sacar3poner2() {
 }
 
 
-void grafoLocalS::marcarNodo(int marcame) {
+void grafoGRASP::marcarNodo(int marcame) {
 	// if (marcas[marcame] != 0) cout << "esta haciendo cualquieraa\n";
 	marcas[marcame]++;
 	no_visitados--;
@@ -159,7 +230,7 @@ void grafoLocalS::marcarNodo(int marcame) {
 	}
 }
 
-void grafoLocalS::desmarcarNodo(int desmarcame) {
+void grafoGRASP::desmarcarNodo(int desmarcame) {
 	marcas[desmarcame]--;
 	// if (marcas[desmarcame] != 0) cout << "esta haciendo cualquiera\n";
 	no_visitados++;

@@ -6,9 +6,8 @@
 
 
 int main() {
-	grafoLocalS g;
-	// g.printGrafo();
-	g.CIDMLocalS();
+	grafoGRASP g;	
+	g.CIDMGRASP(5);
 	g.print_res();
 	return 0;
 }

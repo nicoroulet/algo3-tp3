@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <list>
+// #include "Tiempo.h"
 
 class grafo {
 	protected:
@@ -9,6 +10,7 @@ class grafo {
 		std::vector< std::list<int> > ady;
 		std::vector< std::vector<int> > componentes;
 		std::list<int> res;
+		// Tiempo tiempo;
 		
 	public:
 		grafo();
@@ -19,16 +21,19 @@ class grafo {
 
 class grafoExacto : public grafo {
 	protected:
-		std::vector<int> n_provisorio;
-		std::vector<int> n_final;
-		std::vector<int> no_visitados;
-		int k;
+		std::vector<int> n_provisorio; // cantidad de nodos en la combinacion actual
+		std::vector<int> n_final; // cantidad de nodos en la mejor solucion encontrada hasta ahora
+		std::vector<int> no_visitados; // nodos que falta cubrir
+		int k; // numero de nodo actual en la iteracion
 		int act; // numero de componente siendo resuelta
 		
 		
-		std::list<int> res_parcial;
+		std::list<int> res_parcial; // mejor solucion encontrada
 		std::vector<int> marcas;
 		
+		//para poda grados_max
+		std::vector<int> grados_max; // [i]: suma de los grados de los i nodos con mayor grado + i
+
 		
 		void marcarNodo(int marcame);
 		void desmarcarNodo(int desmarcame);
@@ -54,7 +59,9 @@ class grafoGoloso : public grafo {
 
 class grafoLocalS : public grafoGoloso {
 	protected:
-		void encontrarSolucionLocal();
+		void sacar2poner1();
+		void sacar3poner2();
+		
 		std::vector< std::list<int> > sorted_ady;
 		
 		int no_visitados;
@@ -66,4 +73,18 @@ class grafoLocalS : public grafoGoloso {
 	public:
 		grafoLocalS();
 		void CIDMLocalS();
+};
+
+class grafoGRASP : public grafo {
+	protected:
+		std::vector<bool> esta;
+		int nodosMayorGrado(int cant);
+		
+		void borrarNodo(int borrame);
+		void marcarCIDM(int marcame);
+		
+	public:
+		grafoGRASP();
+		grafoGRASP(grafo &g);
+		void CIDMGRASP(int cant);
 };
