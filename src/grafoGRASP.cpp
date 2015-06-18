@@ -21,7 +21,6 @@ void grafoGRASP::CIDMGRASP(int cantCandidatos){
 	}
 	
 	while(1/*criterio*/){
-		// Dios nos perdone y nos guarde en su gloria
 		aux_ady = vector< list<int> >(ady);
 		
 		res.clear(); // la nueva solucion arranca de 0
@@ -50,22 +49,33 @@ void grafoGRASP::CIDMGRASP(int cantCandidatos){
 }
 
 vector<int> grafoGRASP::nodosMayorGrado(int cantCandidatos){
-	vector<int> cantVecinitosPorNodito(cantCandidatos);
 	
+	// creamos una estructura nodito, que guarda su numero de nodo (para identificarlo), y la cantidad de vecinos que tiene (para ordenarlo)
 	struct nodito{
 		int numerito;
 		int cantVecinitos;
-		bool operator<(nodito otro){
-			return (cantVecinitos < otro.cantVecinitos);
-		}
+			bool operator<(const nodito& otro) const {return (cantVecinitos < otro.cantVecinitos);}
 	};
 	
+	// hacemos la conversion de vector de ints a vector de 'listaNoditos'
+	vector<nodito> listaNoditos(cantCandidatos);
 	for (int i = 0; i < n; ++i){
-		cantVecinitosPorNodito[i] = aux_ady[i].size();
+		listaNoditos[i].numerito = i;
+		listaNoditos[i].cantVecinitos = aux_ady[i].size();
 	}
-	sort(cantVecinitosPorNodito.begin(), cantVecinitosPorNodito.end()); // nlogn
-	cantVecinitosPorNodito.resize(cantCandidatos); // rebano
+
+	//ordenamos, dejando a los mejores al principio
+	sort(listaNoditos.begin(), listaNoditos.end()); // nlogn
+
+	//rebanamos el vector, quedandonos con los <cantCandidatos> mejores
+	listaNoditos.resize(cantCandidatos);
 	
-	return cantVecinitosPorNodito;
+	//devuelvo solamente los numeros de los nodos
+	vector<int> res(cantCandidatos);
+	for (int i = 0; i<n; i++){
+		res[i] = listaNoditos[i].numerito;
+	}
+
+	return res;
 }
 
