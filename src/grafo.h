@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 #include <list>
 // #include "Tiempo.h"
 
@@ -78,9 +79,10 @@ class grafoLocalS : public grafoGoloso {
 
 class grafoGRASP : public grafoLocalS {
 	protected:
-		std::vector<int> nodosMayorGrado(int cantCandidatos);
+		int nodosMayorGrado(int cantCandidatos);
+		std::list<int> res_final;
 	public:
 		grafoGRASP();
 		grafoGRASP(grafo &g);
-		void CIDMGRASP(int cant);
+		void CIDMGRASP(int cant, int iteraciones);
 };

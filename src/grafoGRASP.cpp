@@ -10,28 +10,33 @@ using namespace std;
 
 // ------------------------------------- Greedy randomize:
 
-grafoGRASP::grafoGRASP(): grafoLocalS() {}
+grafoGRASP::grafoGRASP(): grafoLocalS(), res_final() {}
 
 
-void grafoGRASP::CIDMGRASP(int cantCandidatos){
+void grafoGRASP::CIDMGRASP(int cantCandidatos, int iteraciones){
 	srand(time(NULL));
 	sorted_ady = vector<list<int> >(ady);
 	for (int i = 0; i < n; ++i){
 		sorted_ady[i].sort(); // nlogn
 	}
-	
-	while(1/*criterio*/){
+	int k = iteraciones;
+	int cantCandidatosOriginal = cantCandidatos;
+	while(k-- > 0){
+		cantCandidatos = cantCandidatosOriginal;
+		
 		aux_ady = vector< list<int> >(ady);
+		esta = vector<bool>(n, false);
+
 		
 		res.clear(); // la nueva solucion arranca de 0
-		
+
 		// ---- Goloso randomizado:
 		while(n>0){
-			cantCandidatos = max(cantCandidatos, n);
-			marcarCIDM(nodosMayorGrado(cantCandidatos)[rand() % (cantCandidatos-1)]);
+			cantCandidatos = min(cantCandidatos, n);
+			marcarCIDM(nodosMayorGrado(cantCandidatos));
 		}
+		// print_res();
 		n = ady.size();
-		
 		// ---- Busquedas locales:
 		marcas = vector<int>(n,0);
 		for (auto i = res.begin(); i != res.end(); ++i) {
@@ -44,38 +49,46 @@ void grafoGRASP::CIDMGRASP(int cantCandidatos){
 			sacar2poner1();
 			sacar3poner2();
 		} while(res.size() < gusGil);
-			
+		if (res.size() < res_final.size() || res_final.empty()) {
+			res_final.swap(res);
+			k = iteraciones;
+		}
 	}
+	res=res_final;
 }
 
-vector<int> grafoGRASP::nodosMayorGrado(int cantCandidatos){
+int grafoGRASP::nodosMayorGrado(int cantCandidatos){
 	
 	// creamos una estructura nodito, que guarda su numero de nodo (para identificarlo), y la cantidad de vecinos que tiene (para ordenarlo)
 	struct nodito{
 		int numerito;
 		int cantVecinitos;
-			bool operator<(const nodito& otro) const {return (cantVecinitos < otro.cantVecinitos);}
+		bool operator<(const nodito& otro) const {return (cantVecinitos > otro.cantVecinitos);}
 	};
 	
 	// hacemos la conversion de vector de ints a vector de 'listaNoditos'
-	vector<nodito> listaNoditos(cantCandidatos);
-	for (int i = 0; i < n; ++i){
-		listaNoditos[i].numerito = i;
-		listaNoditos[i].cantVecinitos = aux_ady[i].size();
+	vector<nodito> listaNoditos(n);
+	int indiceNoditos = 0;
+	for (int i = 0; i < aux_ady.size(); ++i){
+		if (!esta[i]){
+			listaNoditos[indiceNoditos].numerito = i;
+			listaNoditos[indiceNoditos].cantVecinitos = aux_ady[i].size();
+			indiceNoditos++;
+		}
 	}
 
 	//ordenamos, dejando a los mejores al principio
 	sort(listaNoditos.begin(), listaNoditos.end()); // nlogn
 
-	//rebanamos el vector, quedandonos con los <cantCandidatos> mejores
-	listaNoditos.resize(cantCandidatos);
-	
 	//devuelvo solamente los numeros de los nodos
-	vector<int> res(cantCandidatos);
-	for (int i = 0; i<n; i++){
-		res[i] = listaNoditos[i].numerito;
-	}
+	vector<int> result(cantCandidatos);
 
-	return res;
+	for (int i = 0; i<cantCandidatos; i++){
+		
+		result[i] = listaNoditos[i].numerito;
+	}
+	int r = rand() % cantCandidatos;
+
+	return result[r];
 }
 

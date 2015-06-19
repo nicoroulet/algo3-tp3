@@ -7,7 +7,8 @@
 
 int main() {
 	grafoGRASP g;	
-	g.CIDMGRASP(5);
+	// g.printGrafo();
+	g.CIDMGRASP(10, 100);
 	g.print_res();
 	return 0;
 }
