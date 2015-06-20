@@ -1,42 +1,57 @@
 #include "grafo.h"
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <algorithm>
 
 using namespace std;
 
 
-grafoExacto::grafoExacto(): grafo(), res_parcial(), marcas(n, 0), grados_max(n)
-{
-	// marco nodos aislados
-	//poda: hardcodear casos chicos
-	// for (int i = 0; i < n; ++i)
-	// {
-		// if (ady[i].empty()) // marco los nodos aislados
-		// 	marcarNodo(i);
-		// if (marcas[i] == 0) { // marco los nodos que son el centro de una "estrella"
-		// 	auto it = ady[i].begin();
-		// 	while (it != ady[i].end() && ady[*it].size() == 1) ++it;
-		// 	if (it == ady[i].end())
-		// 		marcarNodo(i);
-		// }
-	// }
+grafoExacto::grafoExacto(): grafo(), res_parcial() {}
+
 	
 
-	int n_componentes = componentes.size();
-	n_provisorio = vector<int>(n_componentes, 0);
-	n_final = vector<int>(n_componentes, n+1);
-	no_visitados = vector<int>(n_componentes);
-	for(int i = 0; i < n_componentes; ++i) {
-		no_visitados[i] = componentes[i].size();
+
+void grafoExacto::CIDMexacto() {
+
+	// separamos las componentes
+	// BFS, numero las componentes conexas
+	vector<int> num_componente(n, -1);	// aca guardo el numero de componente de cada nodo
+	queue<int> q;					// cola de BFS
+	int componente_actual = 0; 		// aumenta en cada nueva componente creada
+	int i=0; 						// buscador de comienzo de nueva componente
+	res_parcial.push_back(10);
+	while (i < n) {
+		q.push(i);
+		while(!q.empty()) {
+			int nodo = q.front(); q.pop();
+			if (num_componente[nodo] == -1) {
+				num_componente[nodo] = componente_actual;
+				for (auto it = ady[nodo].begin(); it != ady[nodo].end(); ++it) {
+					q.push(*it);
+				}
+			}
+		}
+		componente_actual++;
+		while (num_componente[i] != -1 && i<n) ++i;
 	}
 	
-	// for (int i = 0; i < n; ++i) {
-	// 	if (ady[i].empty()) {
-	// 		res.push_back(i);
-	// 		n--;
-	// 	}
-	// }
+	// cout << "componentes:" << componente_actual << endl;
+	// cout << "ejes:" << m << endl;
+	// al terminar, compontente_actual vale la cantidad total de componentes conexas
+	componentes = vector< vector<int> >(componente_actual, vector<int>());
+	for(int i = 0; i < n; ++i) {
+		componentes[num_componente[i]].push_back(i);
+	}
+	// inicializo variables
+	marcas = vector<int>(n, 0);
+	grados_max = vector<int>(n);
+	n_provisorio = vector<int>(componente_actual, 0);
+	n_final = vector<int>(componente_actual, n+1);
+	no_visitados = vector<int>(componente_actual);
+	for(int i = 0; i < componente_actual; ++i) {
+		no_visitados[i] = componentes[i].size();
+	}
 	
 	// calculo los grados 
 	for(int i = 0; i < n; ++i) {
@@ -47,15 +62,8 @@ grafoExacto::grafoExacto(): grafo(), res_parcial(), marcas(n, 0), grados_max(n)
 		grados_max[i] += grados_max[i-1];
 	}
 	
-	
-	// cota inicial
-	// grafoGoloso aux(*this);
-	// n_final = aux.CIDMgoloso()+1;
-}
-
-void grafoExacto::CIDMexacto() {
-	for (act = 0; act < componentes.size(); act++)
-	{
+	// resuelvo
+	for (act = 0; act < componente_actual; act++) {
 		k = -1;
 		// cout << "resolviendo componente " << act << " de tamanio " << componentes[act].size() << endl;
 		res_parcial.swap(res); //empiezo desde donde dejo la componente conexa anterior
@@ -68,14 +76,18 @@ void grafoExacto::CIDMexacto() {
 
 void grafoExacto::subCIDMexacto() {
 	k++;
+	
 	int nodo = componentes[act][k]; // el numero del nodo en el grafo original 
 	// si es solucion
+	// for (auto it = marcas.begin(); it != marcas.end(); ++it) {cout << *it << " ";} cout << endl;
+	// cout << no_visitados[act] << endl;
 	if (no_visitados[act] == 0) {
 		if (n_provisorio[act] < n_final[act]) {
 			res.clear();
 			res = list<int>(res_parcial);
 			n_final[act]=n_provisorio[act];
 		}
+		// cout << "actualice\n";
 		k--;
 		return;
 	}
@@ -92,7 +104,8 @@ void grafoExacto::subCIDMexacto() {
 	}
 	
 	// poda grados_max: si no hay chances de llegar 
-	if (no_visitados[act] > grados_max[n_final[act]-n_provisorio[act]-1]) {
+	if (n_provisorio[act] >= 1 && no_visitados[act] > grados_max[n_final[act]-n_provisorio[act]-1]) {
+		// cout << "poda grados_max, no_visitados=" << no_visitados[act] << " grado_max= " << n_final[act]-n_provisorio[act]-1 << endl;
 		k--; return;
 	}
 	

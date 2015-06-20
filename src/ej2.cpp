@@ -1,12 +1,18 @@
-
 #include "grafo.h"
-// #include "Tiempo.h"
-int main()
-{
+#include "Tiempo.h"
+#include <iostream>
+
+int main() {
 	grafoExacto g;
-	g.printGrafo();
-	g.CIDMexacto();
-	g.print_res();
+	g.leer_grafo();
+	// g.printGrafo();
+	Tiempo t; t.begin();
 	
+	g.CIDMexacto();
+	
+	t.end();
+	std::cerr << g.n_nodos() << " " << t.time() << endl;
+	
+	g.print_res();
 	return 0;
 }

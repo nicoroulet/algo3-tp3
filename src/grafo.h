@@ -3,25 +3,30 @@
 #include <vector>
 #include <iostream>
 #include <list>
-#include "Tiempo.h"
+// #include "Tiempo.h"
 
 class grafo {
 	protected:
 		int n, m;
 		std::vector< std::list<int> > ady;
-		std::vector< std::vector<int> > componentes;
 		std::list<int> res;
 		// Tiempo tiempo;
 		
 	public:
 		grafo();
 		grafo(grafo &g);
+		void leer_grafo();
 		void print_res();
 		void printGrafo();
+		
+		int n_nodos();
+		int n_ejes();
 };
 
 class grafoExacto : public grafo {
 	protected:
+		std::vector< std::vector<int> > componentes;
+		
 		std::vector<int> n_provisorio; // cantidad de nodos en la combinacion actual
 		std::vector<int> n_final; // cantidad de nodos en la mejor solucion encontrada hasta ahora
 		std::vector<int> no_visitados; // nodos que falta cubrir

@@ -5,7 +5,7 @@ using namespace std;
 
 grafoGoloso::grafoGoloso(): grafo(), esta(n, false) {}
 
-grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
+// grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
 
 void grafoGoloso::CIDMgoloso(){
 	aux_ady = vector< list<int> >(ady);
