@@ -23,14 +23,15 @@ if (mn == "m"):
 	subprocess.call(['sh', '-c', ('mkdir -p ' + test_folder + '/m')])
 	subprocess.call(['sh', '-c', ('rm -f ' + test_folder + '/m/*')])
 	n = max_size
-	for sqrtm in range(int(sqrt(n)), n-2):
-		m = (sqrtm**2)/2 # m va entre n/2 y (n-2)**2/2
+	for m in range(n/2, (n-2)**2/4):
+		# m = (sqrtm**2)/2 # m va entre n/2 y (n-2)**2/2
 		for i in range(iters):
-			f = open(test_folder + "/m/%d_%d.in" %(m,i))
+			# subprocess.call(['sh', '-c', ('touch ' + test_folder + '/m/%d_%d.in' %(m,i))])
+			f = open(test_folder + "/m/%d_%d.in" %(m,i), 'w')
 			f.write("%d %d\n" %(n,m))
 			s=set()
 			while len(s) < m:
-				t1, t2=(randrange(n), randrange(n))
+				t1, t2=(randrange(n)+1, randrange(n)+1)
 				if not ((t1, t2) in s or (t2,t1) in s or t1==t2): 
 					s.add((t1,t2))
 					f.write("%d %d\n" %(t1,t2))

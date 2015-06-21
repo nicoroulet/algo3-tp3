@@ -11,7 +11,7 @@ int main() {
 	g.CIDMexacto();
 	
 	t.end();
-	std::cerr << g.n_nodos() << " " << t.time() << endl;
+	std::cerr << g.n_nodos() << " " << g.n_ejes() << " " << t.time() << endl;
 	
 	g.print_res();
 	return 0;
