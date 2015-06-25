@@ -38,7 +38,6 @@ void grafoGoloso::borrarNodo(int borrame) {
 }
 
 void grafoGoloso::marcarCIDM(int marcame){
-	if (esta[marcame]) cout << "Sos un forrrrrrrro\n";
 	esta[marcame] = true;
 	while(!aux_ady[marcame].empty()) { //for (auto it = aux_ady[marcame].begin(); it != aux_ady[marcame].end(); ++it) {
 		esta[aux_ady[marcame].front()] = true;

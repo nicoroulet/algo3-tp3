@@ -33,10 +33,11 @@ list<int> interseccion(list<int> &a, list<int> &b) {
 	return intersection;
 }
 
-grafoLocalS::grafoLocalS(): grafoGoloso(), marcas(n,0), no_visitados(n)  {}
+grafoLocalS::grafoLocalS(): grafoGoloso()  {}
 
 void grafoLocalS::CIDMLocalS() {
-	
+	no_visitados=n;
+	marcas=vector<int>(n,0);
 	sorted_ady = vector<list<int> >(ady);
 	for (int i = 0; i < n; ++i){
 		sorted_ady[i].sort(); // nlogn
