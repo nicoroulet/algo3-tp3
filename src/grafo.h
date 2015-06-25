@@ -70,6 +70,7 @@ class grafoLocalS : public grafoGoloso {
 	protected:
 		void sacar2poner1();
 		void sacar3poner2();
+		void sacar3poner1();
 		
 		std::vector< std::list<int> > sorted_ady;
 		

@@ -53,8 +53,47 @@ void grafoLocalS::CIDMLocalS() {
 	do {
 		prevResSize = res.size();
 		sacar2poner1();
+		sacar3poner1();
 		sacar3poner2();
 	} while(res.size() < prevResSize);
+}
+
+
+void grafoLocalS::sacar3poner1() {
+	for (auto i = res.begin(); i != res.end(); ++i) {
+		for (auto j = next(i); j != res.end(); ++j) {
+			for (auto k = next(j); k != res.end(); ++k) {
+				list<int> candidatos = interseccion(sorted_ady[*i], sorted_ady[*j]);
+				candidatos = interseccion(candidatos, sorted_ady[*k]);
+				for (auto it = candidatos.begin(); it != candidatos.end() && k != res.end(); ++it) {
+					if (marcas[*it] == 3) {
+						desmarcarNodo(*i);
+						desmarcarNodo(*j);
+						desmarcarNodo(*k);
+						marcarNodo(*it);
+						if (no_visitados == 0) {
+							// cerr << "s3p1\n";
+							res.push_front(*it);
+							k = res.erase(k);
+							j = res.erase(j);
+							i = res.erase(i);
+							if (k==j && k != res.end()) k++;
+							if (i==j && j != res.end()) j++;
+							if (k==j && k != res.end()) k++;
+						} else {
+							desmarcarNodo(*it);
+							marcarNodo(*i);
+							marcarNodo(*j);
+							marcarNodo(*k);
+						}
+					}
+				}
+				if (k == res.end()) k--;
+			}
+			if (j == res.end()) j--;
+		}
+		if (i == res.end()) i--;
+	}
 }
 
 void grafoLocalS::sacar2poner1() {
