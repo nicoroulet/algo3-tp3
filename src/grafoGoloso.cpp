@@ -3,11 +3,12 @@
 
 using namespace std;
 
-grafoGoloso::grafoGoloso(): grafo(), esta(n, false) {}
+grafoGoloso::grafoGoloso(): grafo() {}
 
 // grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
 
 void grafoGoloso::CIDMgoloso(){
+	esta = vector<bool>(n,false);
 	aux_ady = vector< list<int> >(ady);
 	while(n>0) {
 		marcarCIDM(nodoMayorGrado());
