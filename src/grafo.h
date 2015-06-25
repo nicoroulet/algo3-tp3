@@ -57,6 +57,7 @@ class grafoGoloso : public grafo {
 		int nodoMayorGrado();
 		void borrarNodo(int borrame);
 		void marcarCIDM(int marcame);
+		int noEstan;
 		
 		
 	public:

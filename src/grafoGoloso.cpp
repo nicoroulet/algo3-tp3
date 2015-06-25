@@ -8,12 +8,12 @@ grafoGoloso::grafoGoloso(): grafo() {}
 // grafoGoloso::grafoGoloso(grafo &g): grafo(g), esta(n, false) {}
 
 void grafoGoloso::CIDMgoloso(){
+	noEstan = n;
 	esta = vector<bool>(n,false);
 	aux_ady = vector< list<int> >(ady);
-	while(n>0) {
+	while(noEstan>0) {
 		marcarCIDM(nodoMayorGrado());
 	}
-	n = ady.size();
 }
 
 
@@ -34,7 +34,7 @@ void grafoGoloso::borrarNodo(int borrame) {
 		aux_ady[*it].remove(borrame);
 	}
 	aux_ady[borrame].clear();
-	n--;
+	noEstan--;
 }
 
 void grafoGoloso::marcarCIDM(int marcame){
@@ -45,7 +45,7 @@ void grafoGoloso::marcarCIDM(int marcame){
 		borrarNodo(aux_ady[marcame].front());
 	}
 	// aux_ady[marcame].clear(); - no hace falta
-	n--;
+	noEstan--;
 	res.push_back(marcame);	
 }
 
