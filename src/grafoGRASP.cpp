@@ -43,12 +43,12 @@ void grafoGRASP::CIDMGRASP(int cantCandidatos, int iteraciones){
 			marcarNodo(*i);
 		}
 		
-		int gusGil;
+		int prevResSize;
 		do {
-			gusGil = res.size();
+			prevResSize = res.size();
 			sacar2poner1();
 			sacar3poner2();
-		} while(res.size() < gusGil);
+		} while(res.size() < prevResSize);
 		if (res.size() < res_final.size() || res_final.empty()) {
 			res_final.swap(res);
 			k = iteraciones;

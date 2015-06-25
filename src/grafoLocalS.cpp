@@ -49,12 +49,12 @@ void grafoLocalS::CIDMLocalS() {
 		marcarNodo(*i);
 	}
 	
-	int gusGil;
+	int prevResSize;
 	do {
-		gusGil = res.size();
+		prevResSize = res.size();
 		sacar2poner1();
 		sacar3poner2();
-	} while(res.size() < gusGil);
+	} while(res.size() < prevResSize);
 }
 
 void grafoLocalS::sacar2poner1() {
