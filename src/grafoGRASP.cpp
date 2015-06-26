@@ -48,6 +48,7 @@ void grafoGRASP::CIDMGRASP(int cantCandidatos, int iteraciones){
 			prevResSize = res.size();
 			sacar2poner1();
 			sacar3poner2();
+			sacar3poner1();
 		} while(res.size() < prevResSize);
 		if (res.size() < res_final.size() || res_final.empty()) {
 			res_final.swap(res);

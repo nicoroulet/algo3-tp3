@@ -104,7 +104,7 @@ void grafoLocalS::sacar2poner1() {
 			// print(sorted_ady[*j]);
 			// print(candidatos);
 			// cout << "---------\n";
-			for (auto it = candidatos.begin(); it != candidatos.end(); ++it) {
+			for (auto it = candidatos.begin(); it != candidatos.end() && j != res.end(); ++it) {
 				if (marcas[*it] == 2) {
 					desmarcarNodo(*i);
 					desmarcarNodo(*j);
